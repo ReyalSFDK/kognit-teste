@@ -27,6 +27,8 @@ export const Login: React.FC = () => {
 				size="lg"
 				color="green"
 				variant="elevated"
+				bgColor="F7F8FA"
+				boxShadow="0px 3px 6px #00000012"
 			>
 				<CardBody
 					p={10}
