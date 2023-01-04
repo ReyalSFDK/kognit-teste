@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-	Box,
 	Flex,
 	IconButton,
 	Popover,
@@ -8,15 +7,30 @@ import {
 	PopoverCloseButton,
 	PopoverContent,
 	PopoverHeader,
-	PopoverTrigger, Spinner, Stack, Text,
+	PopoverTrigger, Spinner, Stack, Text, useToast,
 } from "@chakra-ui/react";
 import { observer, useLocalObservable } from "mobx-react-lite";
 import { AiFillBell } from "react-icons/all";
 
 import { Store } from "./store";
+import { NotificationItem } from "../../components";
 
 export const Dashboard: React.FC = observer(() => {
 	const store = useLocalObservable(() => new Store());
+	const toast = useToast();
+
+	const fetchNotification = async () => {
+		await store.fetchNotifications(
+			() => {
+				toast({
+					title: "Erro ao carregar notificações",
+					description: "Tente novamente mais tarde",
+					status: "error",
+					isClosable: true,
+				});
+			},
+		);
+	}
 
 	return (
 		<Flex
@@ -29,9 +43,7 @@ export const Dashboard: React.FC = observer(() => {
 		>
 			<Popover
 				isLazy
-				onOpen={() => store.fetchNotifications(
-					() => {},
-				)}
+				onOpen={() => fetchNotification()}
 			>
 				<PopoverTrigger>
 					<IconButton
@@ -63,18 +75,19 @@ export const Dashboard: React.FC = observer(() => {
 						}
 					</PopoverHeader>
 					<PopoverArrow />
-					<PopoverCloseButton />
+					<PopoverCloseButton height={30} />
 					<PopoverBody>
 						{
 							(!store.isLoading && store.notifications.length === 0)
 								? <Text>Sem notificações no momento</Text>
 								: (
-									<Stack>
+									<Stack spacing={3}>
 										{store.notifications.map((notification) => (
-											<Box key={notification.id}>
-												<Text fontWeight="bold" fontSize="md" >{notification.title}</Text>
-												<Text fontWeight="thin" fontSize="sm" >{notification.body}</Text>
-											</Box>
+											<NotificationItem
+												title={notification.title}
+												message={notification.body}
+												key={notification.id}
+											/>
 										))}
 									</Stack>
 								)
