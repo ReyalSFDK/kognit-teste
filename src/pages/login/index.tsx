@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Card, CardHeader, Container, Heading } from "@chakra-ui/react";
+import {
+	Button,
+	Card,
+	CardBody,
+	Checkbox,
+	Container,
+	Input, InputGroup, InputLeftElement, Stack
+} from "@chakra-ui/react";
+import { IoMdContact, IoMdLock } from "react-icons/all";
 
 export const Login: React.FC = () => {
 	return (
@@ -13,9 +21,50 @@ export const Login: React.FC = () => {
 				color="green"
 				variant="elevated"
 			>
-				<CardHeader>
-					<Heading size='md'>Login</Heading>
-				</CardHeader>
+				<CardBody
+					p={10}
+				>
+					<Stack
+						spacing={5}
+					>
+						<InputGroup>
+							<InputLeftElement
+								pointerEvents="none"
+								children={<IoMdContact color="gray.300" />}
+							/>
+							<Input variant="flushed" type="email" placeholder="Insira seu email" />
+						</InputGroup>
+
+						<InputGroup>
+							<InputLeftElement
+								pointerEvents="none"
+								children={<IoMdLock color="gray.300" />}
+							/>
+							<Input variant="flushed" type="password" placeholder="Insira sua senha" />
+						</InputGroup>
+
+						<Checkbox colorScheme="green" defaultChecked> Entrar automaticamente</Checkbox>
+
+						<Button
+							width="full"
+							mt={4}
+							colorScheme="green"
+							type="submit"
+						>
+							Entrar
+						</Button>
+
+						<Button
+							variant="link"
+							width="full"
+							mt={4}
+							colorScheme="green"
+							type="submit"
+						>
+							Esqueci minha senha
+						</Button>
+					</Stack>
+				</CardBody>
 			</Card>
 		</Container>
 	)
