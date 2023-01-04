@@ -8,8 +8,15 @@ import {
 	Input, InputGroup, InputLeftElement, Stack
 } from "@chakra-ui/react";
 import { IoMdContact, IoMdLock } from "react-icons/all";
+import { useNavigate } from "react-router-dom";
 
 export const Login: React.FC = () => {
+	const navigate = useNavigate();
+
+	const onLoginClick = () => {
+		navigate("/dashboard");
+	}
+
 	return (
 		<Container
 			flex={1}
@@ -50,6 +57,7 @@ export const Login: React.FC = () => {
 							mt={4}
 							colorScheme="green"
 							type="submit"
+							onClick={() => onLoginClick()}
 						>
 							Entrar
 						</Button>
@@ -59,7 +67,6 @@ export const Login: React.FC = () => {
 							width="full"
 							mt={4}
 							colorScheme="green"
-							type="submit"
 						>
 							Esqueci minha senha
 						</Button>
